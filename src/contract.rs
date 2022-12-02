@@ -1,8 +1,7 @@
 #[cfg(not(feature = "library"))]
-
 use crate::msg::OwnerResponse;
-use cosmwasm_std::Addr;
 use cosmwasm_std::entry_point;
+use cosmwasm_std::Addr;
 use cosmwasm_std::{to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdResult};
 
 use crate::error::ContractError;
@@ -43,21 +42,23 @@ pub fn execute(
     }
 }
 
-
-pub fn update_owner(deps: DepsMut, info: MessageInfo, new_owner: Addr) -> Result<Response, ContractError> {
-    
+pub fn update_owner(
+    deps: DepsMut,
+    info: MessageInfo,
+    new_owner: Addr,
+) -> Result<Response, ContractError> {
     let address = Addr::to_string(&new_owner);
     let checked: Addr = deps.api.addr_validate(&address)?;
     assert_eq!(checked, address);
-    
-    STATE.update(deps.storage, |mut state| -> Result<_, ContractError>{
+
+    STATE.update(deps.storage, |mut state| -> Result<_, ContractError> {
         // let mut _mutable = Addr::to_string(&info.sender);
 
         if info.sender != state.owner {
-            return Err(ContractError::Unauthorized {})
+            return Err(ContractError::Unauthorized {});
         }
         if info.sender == new_owner {
-            return Err(ContractError::AlreadyOwner {})
+            return Err(ContractError::AlreadyOwner {});
         }
 
         let owner = Addr::unchecked(new_owner);
@@ -76,7 +77,6 @@ pub fn try_increment(deps: DepsMut) -> Result<Response, ContractError> {
 
     Ok(Response::new().add_attribute("method", "try_increment"))
 }
-
 
 pub fn try_reset(deps: DepsMut, info: MessageInfo, count: i32) -> Result<Response, ContractError> {
     STATE.update(deps.storage, |mut state| -> Result<_, ContractError> {
@@ -105,7 +105,6 @@ fn query_count(deps: Deps) -> StdResult<CountResponse> {
 fn query_owner(deps: Deps) -> StdResult<OwnerResponse> {
     let state = STATE.load(deps.storage)?;
     Ok(OwnerResponse { owner: state.owner })
-    
 }
 
 #[cfg(test)]
@@ -162,7 +161,6 @@ mod tests {
         let msg = InstantiateMsg { count: 12 };
         let info = mock_info("creator", &coins(2, "token"));
         let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
-
 
         // contract creator can transfer contract to new owner
         let info = mock_info("creator", &coins(2, "token"));
