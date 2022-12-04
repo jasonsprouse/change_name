@@ -71,5 +71,5 @@ jobs:
       - name: Generate Schema
         uses: actions-rs/cargo@v1
         with:
-          command: cargo run schema
+          command: schema
           args: --locked
