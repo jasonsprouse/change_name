@@ -34,7 +34,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: wasm
-          args: --locked
+          args: --locked -- --lib
         env:
           RUSTFLAGS: "-C link-arg=-s"
 
