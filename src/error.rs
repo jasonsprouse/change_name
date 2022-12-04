@@ -11,7 +11,7 @@ pub enum ContractError {
 
     #[error("Already Owner")]
     AlreadyOwner {},
-    
+
     #[error("Address Invalid")]
     AddressInvalid {},
     // Add any other custom errors you like here.
