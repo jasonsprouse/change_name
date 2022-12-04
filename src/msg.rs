@@ -1,6 +1,6 @@
-use cosmwasm_std::Addr;
 use cosmwasm_schema::cw_serde;
 use cosmwasm_schema::QueryResponses;
+use cosmwasm_std::Addr;
 
 #[cw_serde]
 pub struct InstantiateMsg {

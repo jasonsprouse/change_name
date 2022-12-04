@@ -20,6 +20,7 @@ jobs:
           toolchain: 1.51.0
           target: wasm32-unknown-unknown
           override: true
+          args: --locked
 
       - name: Run unit tests
         uses: actions-rs/cargo@v1
@@ -48,7 +49,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.51.0
+          toolchain: 1.56.0
           override: true
           components: rustfmt, clippy
 

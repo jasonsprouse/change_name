@@ -47,7 +47,6 @@ pub fn update_owner(
     info: MessageInfo,
     new_owner: Addr,
 ) -> Result<Response, ContractError> {
-    
     let address = Addr::to_string(&new_owner);
     let checked: Addr = deps.api.addr_validate(&address)?;
     assert_eq!(checked, address);
