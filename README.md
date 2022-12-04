@@ -1,3 +1,5 @@
+[![Basic](https://github.com/jasonsprouse/change_name/actions/workflows/Basic.yml/badge.svg)](https://github.com/jasonsprouse/change_name/actions/workflows/Basic.yml)
+
 # CosmWasm Starter Pack
 
 This is a template to build smart contracts in Rust to run inside a

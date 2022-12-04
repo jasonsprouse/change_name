@@ -143,7 +143,7 @@ mod tests {
         let info = mock_info("creator", &coins(1000, "earth"));
         let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
 
-        // beneficiary can release it
+        // anyone can increment counter 
         let info = mock_info("anyone", &coins(2, "token"));
         let msg = ExecuteMsg::Increment {};
         let _res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
@@ -162,13 +162,18 @@ mod tests {
         let info = mock_info("creator", &coins(1000, "earth"));
         let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
 
+        // owner should be creator
+        let res = query(deps.as_ref(), mock_env(), QueryMsg::GetOwner {}).unwrap();
+        let value: OwnerResponse = from_binary(&res).unwrap();
+        assert_eq!("creator", value.owner);
+
         // contract creator can transfer contract to new owner
         let info = mock_info("creator", &coins(2, "token"));
         let address = Addr::unchecked("anyone");
         let msg = ExecuteMsg::NewOwner { new_owner: address };
         let _res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
 
-        // should have a new owner now
+        // owner should be anyone
         let res = query(deps.as_ref(), mock_env(), QueryMsg::GetOwner {}).unwrap();
         let value: OwnerResponse = from_binary(&res).unwrap();
         assert_eq!("anyone", value.owner)
@@ -182,7 +187,7 @@ mod tests {
         let info = mock_info("creator", &coins(1000, "earth"));
         let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
 
-        // beneficiary can release it
+        // unauthorized attempt to reset the counter by anyone
         let unauth_info = mock_info("anyone", &coins(2, "token"));
         let msg = ExecuteMsg::Reset { count: 5 };
         let res = execute(deps.as_mut(), mock_env(), unauth_info, msg);
