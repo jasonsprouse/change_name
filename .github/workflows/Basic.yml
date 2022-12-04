@@ -29,7 +29,6 @@ jobs:
           args: --locked
         env:
           RUST_BACKTRACE: 1
-          RUSTFLAGS: -Z unstable-options
 
       - name: Compile WASM contract
         uses: actions-rs/cargo@v1
