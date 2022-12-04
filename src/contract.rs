@@ -143,7 +143,7 @@ mod tests {
         let info = mock_info("creator", &coins(1000, "earth"));
         let _res = instantiate(deps.as_mut(), mock_env(), info, msg).unwrap();
 
-        // anyone can increment counter 
+        // anyone can increment counter
         let info = mock_info("anyone", &coins(2, "token"));
         let msg = ExecuteMsg::Increment {};
         let _res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
